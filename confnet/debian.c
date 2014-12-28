@@ -3,7 +3,11 @@
 #include "logger.h"
 #include "utils.h"
 
+#ifdef DEBUG_F
+#define INTERFACES  "/tmp/interfaces"
+#else
 #define INTERFACES  "/etc/network/interfaces"
+#endif
 
 #define ADDRESS_S  "address"
 #define DNS_S  "dns-nameservers"
@@ -11,6 +15,24 @@
 extern int    g_dev_counter;
 extern char   g_external_name[MAC_ADDR_LEN];
 extern char   g_internal_name[MAC_ADDR_LEN];
+
+/*
+    restart network
+*/
+bool debian_restart_network(void)
+{
+    int ret;
+
+    log_info("Restart network service");
+
+    ret = system("/etc/init.d/networking restart");
+    if (ret != 0) {
+        log_error("Restarting network service failed");
+        return false;
+    }
+
+    return true;
+}
 
 /*
     config loopback interface
@@ -84,11 +106,6 @@ void  debain_external_if(FILE *fp, const struct inet_t *inet, const char* name)
             fprintf(fp,"\t%s %s\n", str_lower(pos->key), pos->value);
         }
 
-        if(!flag)
-        {
-             fprintf(fp, "\tdns-nameservers %s\n", DEFAULT_DNS1);
-             flag = false;
-        }
     }
 
     if(!flag)
@@ -125,10 +142,11 @@ bool debain_config_if_file()
 
     for(;i < g_inet_num; i++)
     {
+       ifnet = &g_inet_array[i];
+
        if(strlen(ifnet->name) == 0)
            continue;
          
-        ifnet = &g_inet_array[i];
         _get_if_name(ifnet->flag, ifnet->name, name);
         debain_external_if(fp, ifnet, name);
     }

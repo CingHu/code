@@ -36,22 +36,28 @@
 #include <netdb.h>
 #include <ctype.h>
 
-#include "utils.h"
 #include "list.h"
+#include "basefunc.h"
 
-#define REDHAT 1
-#define SUSE   2
-#define DEBAIN 3
+#define INVALID  0
+#define REDHAT   1
+#define SUSE     2
+#define DEBAIN   3
 
 
 #define RT_ERROR   0
 #define RT_SUCCESS 1
 
-//#define EXTERNAL_MAC_PREFIX    "00:3e"
-//#define EXTERNAL_MAC_PREFIX_B  "00:3E"
+#define DEBUG_F
 
-#define EXTERNAL_MAC_PREFIX    "b8:70"
-#define EXTERNAL_MAC_PREFIX_B  "B8:70"
+#ifdef DEBUG_F
+#define EXTERNAL_MAC_PREFIX    "08:00:27:73"
+#define EXTERNAL_MAC_PREFIX_B  "08:00:27:73"
+#else
+#define EXTERNAL_MAC_PREFIX    "00:3e"
+#define EXTERNAL_MAC_PREFIX_B  "00:3E"
+#endif
+
 
 #define DEFAULT_DNS1           "8.8.8.8"
 #define DEFAULT_DNS2           "8.8.4.4"

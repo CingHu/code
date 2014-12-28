@@ -77,36 +77,6 @@ int save_pair(struct inet_t* inet, char* key, char* value)
     return RT_SUCCESS;
 }
 
-int stringfind(const char *pSrc, const char *pDst)  
-{  
-    int i, j;  
-    for (i=0; pSrc[i]!='\0'; i++)  
-    {  
-        if(pSrc[i]!=pDst[0])  
-            continue;         
-        j = 0;  
-        while(pDst[j]!='\0' && pSrc[i+j]!='\0')  
-        {  
-            j++;  
-            if(pDst[j]!=pSrc[i+j])  
-            break;  
-        }  
-        if(pDst[j]=='\0')  
-            return i;  
-    }  
-    return -1;  
-}
-
-char *
-str_lower(const char *str)
-{
-    char *new, *p;
-    new = strdup(str);
-    for (p = new; *p; p++)
-        *p = tolower(*p);
-    return new;
-}
-
 void log_inet_info(void)
 {
     struct inet_t* ifnet;

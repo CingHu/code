@@ -3,6 +3,7 @@
 #include "interface.h"
 
 
+extern int    g_inet_num;
 extern char   g_external_name[DEVICE_NAME_LEN];
 extern char   g_internal_name[DEVICE_NAME_LEN];
 
@@ -216,6 +217,9 @@ is_ip_public(const char *ip)
 
 bool get_name_by_mac(const char* mac, char* if_name)
 {
+    char name[DEVICE_NAME_LEN];
+    int pos = 0;
+  
     inetface_t *i;
     inetface_t * ifaces = NULL;    
 
@@ -230,7 +234,17 @@ bool get_name_by_mac(const char* mac, char* if_name)
  
         if(strcmp(mac, i->mac) == 0) 
         {
-             strcpy(if_name,i->name);
+             strcpy(name,i->name);
+             pos = stringfind(name, ":"); 
+             if(pos > 0)
+             {
+                 left(if_name, name, pos);
+             }
+             else
+             {
+                 strcpy(if_name, name);
+             }
+
              return true;
         }
             
@@ -252,6 +266,10 @@ bool get_nic_name(void)
 
     for(i = ifaces;i;i = i->next)
     {
+        if(stringfind(i->name, ":") != -1)
+            continue;
+
+
         if(stringfind(i->mac, EXTERNAL_MAC_PREFIX) != -1 ||
             stringfind(i->mac, EXTERNAL_MAC_PREFIX_B) != -1) 
         {
@@ -261,7 +279,6 @@ bool get_nic_name(void)
         {
              strcpy(g_internal_name, i->name);
         }
-   
             
     }
     
@@ -270,7 +287,7 @@ bool get_nic_name(void)
 }
 
 
-bool get_ip_by_name(char if_name[DEVICE_NAME_LEN], char ipaddress[IP_ADDR_LEN])
+bool get_ip_by_name(const char* if_name, char* ipaddress)
 {
 
     inetface_t *i;
@@ -302,8 +319,77 @@ bool get_ip_by_name(char if_name[DEVICE_NAME_LEN], char ipaddress[IP_ADDR_LEN])
    return false;
 }
 
+void _restart_internal_interface(const char* name)
+{
+     char cmd[128]={0};
+
+    
+     sprintf(cmd, "ifconfig %s down", name);
+     system(cmd);
+     memset(cmd, 0, 128);
+     sprintf(cmd, "ifconfig %s up", name);
+     system(cmd);
+}
+
+void _restart_external_interface(const char* name)
+{
+    int i = 0;  
+    char cmd[128]={0};
 
 
+    for(;i < g_inet_num; i++)
+    {
+        memset(cmd, 0, 128);
+
+        if(i == 0)
+        {
+            sprintf(cmd, "ifconfig %s down", name);
+            system(cmd);
+            memset(cmd, 0, 128);
+            sprintf(cmd, "ifconfig %s up", name);
+            system(cmd);
+        }
+        else
+        {
+            sprintf(cmd, "ifconfig %s:%d down", name, i);
+            system(cmd);
+            memset(cmd, 0, 128);
+            sprintf(cmd, "ifconfig %s:%d up", name, i);
+            system(cmd);
+        }
+
+        printf("%s\n", cmd);
+    }
+
+    return;
+}
+
+bool restart_interface(const char* mac)
+{
+    char name[DEVICE_NAME_LEN];
+
+
+    if(!get_name_by_mac(mac, name))
+    {
+        log_error("get name failed\n");
+        return false;
+    }
+    
+
+    log_info("interface name:%s\n", name);
+
+    if(stringfind(mac, EXTERNAL_MAC_PREFIX) != -1 ||
+        stringfind(mac, EXTERNAL_MAC_PREFIX_B) != -1) 
+    {
+       _restart_external_interface(name);
+    }
+    else
+    {
+       _restart_internal_interface(name);
+    }
+
+    return true;
+}
 
 
 

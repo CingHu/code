@@ -8,7 +8,7 @@
 #define FAILED 0
 #define HASH_LEN 5
 
-
+int hash_insert(HashTable *ht, char *key, void *value);
 
 int hash_init(HashTable **ht) {
     (*ht) = (HashTable *)malloc(sizeof(HashTable));

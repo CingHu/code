@@ -41,7 +41,6 @@ void _get_line_key_value(char *buf, char* key, char* value)
 
 bool _push_param(struct inet_t* inet, int flag)
 {
-    char name[DEVICE_NAME_LEN];
 
     if(!get_nic_name())
         return  false;
