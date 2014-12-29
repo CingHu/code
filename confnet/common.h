@@ -48,7 +48,7 @@
 #define RT_ERROR   0
 #define RT_SUCCESS 1
 
-#define DEBUG_F
+//#define DEBUG_F
 
 #ifdef DEBUG_F
 #define EXTERNAL_MAC_PREFIX    "08:00:27:73"

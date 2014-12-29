@@ -12,10 +12,12 @@ extern int    g_version;
 
 void print_func()
 {
-    printf("get_name_by_mac mac\n");
-    printf("interface\n");
-    printf("reset_interface mac\n");
-    printf("reset_all_interface\n");
+    printf("input param error, please check input param!\n");
+    printf("help:\n");
+    printf("\tget_name_by_mac mac\n");
+    printf("\tinterface\n");
+    printf("\treset_interface mac\n");
+    printf("\treset_all_interface\n");
 }
 
 int main(int argc, char *argv[])
@@ -28,7 +30,6 @@ int main(int argc, char *argv[])
 
     if(argc < 2)
     {
-        printf("input param error!\n");
         print_func();
         return false;
     }
@@ -77,7 +78,6 @@ int main(int argc, char *argv[])
     }
     else
     {
-        printf("input param error!\n");
         print_func();
         rt = RT_ERROR;
         goto end;
