@@ -47,6 +47,7 @@
 
 #define RT_ERROR   0
 #define RT_SUCCESS 1
+#define RT_FILE_NULL 2
 
 //#define DEBUG_F
 
@@ -63,7 +64,7 @@
 #define DEFAULT_DNS2           "8.8.4.4"
 
 #define LOG_NAME          "/var/log/confnet.log"
-#define INET_PATH         "/tmp/"
+#define INET_PATH         "/etc/chinac/"
 #define NET_SUFFIX        ".ipconf"
 #define MASTER_SUFFIX     "master_ip"
 #define SLAVOR_SUFFIX     "attach_ip"
@@ -86,7 +87,6 @@
 extern char uxdigits[16];
 extern char lxdigits[16];
 
-#define DEBUG true
 
 #define UHHEXDIG(c) uxdigits[(c) >> 4]
 #define ULHEXDIG(c) uxdigits[(c) & 0xf]

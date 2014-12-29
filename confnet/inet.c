@@ -82,6 +82,7 @@ int parase_file(const char *name, struct inet_t* inet)
     char key[KEY_LEN] = {0};
     char value[VANLUE_LEN] = {0};
     char path_name[DEVICE_NAME_LEN]={0};
+    char ch;
     int  flag = -1;
 
     if(NULL == inet)
@@ -101,8 +102,19 @@ int parase_file(const char *name, struct inet_t* inet)
     if(NULL == fp)
         return RT_ERROR;
 
+    ch = fgetc(fp);
+    if(NULL == ch)
+    {
+        log_error("the content of file is NULL\n");
+        fclose(fp);  
+        return RT_SUCCESS;
+    }
+
     if( !_push_param(inet, flag))
+     {
+        fclose(fp);  
         return RT_ERROR;
+     }
        
       
     while(!feof(fp))  
@@ -145,6 +157,8 @@ int parase_file(const char *name, struct inet_t* inet)
   
     fclose(fp);  
   
+    g_inet_num++;
+
     return RT_SUCCESS;
 }
 
@@ -183,8 +197,6 @@ int parase_dir_file(void)
              log_error("parase file failed,name:%s\n", dirp->d_name);
              goto end;
          }
-
-         g_inet_num++;
      }
 
 end:

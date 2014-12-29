@@ -12,6 +12,7 @@
 #endif
 
 extern int    g_dev_counter;
+extern char   g_external_name[MAC_ADDR_LEN];
 
 /*
     restart network
@@ -75,10 +76,8 @@ void centos_external_if(FILE* fp, struct inet_t *inet, const char* name)
         {
            flag = true;
         }
-        else
-        {
-            fprintf(fp,"%s=%s\n", pos->key, pos->value);
-        }
+
+        fprintf(fp,"%s=%s\n", pos->key, pos->value);
 
     }
 
@@ -98,8 +97,13 @@ bool centos_config_if_file()
     struct inet_t *inet;
     int i = 0;
     char name[DEVICE_NAME_LEN] = {0};
+    char cmd[128]={0};
 
     g_dev_counter = 0;
+
+    sprintf(cmd, "rm -f %s%s%s%s", NETWORK_PATH, "ifcfg-", g_external_name,"*");
+
+    system(cmd);
 
     for(;i < g_inet_num; i++)
     {
