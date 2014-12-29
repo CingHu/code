@@ -217,7 +217,8 @@ is_ip_public(const char *ip)
 
 bool get_name_by_mac(const char* mac, char* if_name)
 {
-    char name[DEVICE_NAME_LEN];
+    char name[DEVICE_NAME_LEN]; 
+    char lower_mac[6] = {0};
     int pos = 0;
   
     inetface_t *i;
@@ -225,6 +226,8 @@ bool get_name_by_mac(const char* mac, char* if_name)
 
     ifaces = load_if_info();
 
+
+    strcpy(lower_mac,str_lower(mac));
     
     if(NULL == ifaces)
         return false;
@@ -232,7 +235,8 @@ bool get_name_by_mac(const char* mac, char* if_name)
     for(i = ifaces;i;i = i->next)
     {
  
-        if(strcmp(mac, i->mac) == 0) 
+        if(strcmp(mac, i->mac) == 0 ||
+            strcmp(lower_mac, i->mac) == 0) 
         {
              strcpy(name,i->name);
              pos = stringfind(name, ":"); 
@@ -268,7 +272,6 @@ bool get_nic_name(void)
     {
         if(stringfind(i->name, ":") != -1)
             continue;
-
 
         if(stringfind(i->mac, EXTERNAL_MAC_PREFIX) != -1 ||
             stringfind(i->mac, EXTERNAL_MAC_PREFIX_B) != -1) 
