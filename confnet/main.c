@@ -36,13 +36,16 @@ int main(int argc, char *argv[])
    
     strcpy(func, argv[1]);
 
+    log_init(LOG_NAME, true);
+
+    log_info("recevie msg, func:%s\n", func);
+
     if(get_version(&g_version))
     {
         log_error("get version failed\n");
         return RT_ERROR;
     }
 
-    log_init(LOG_NAME, true);
 
     get_nic_name();
 

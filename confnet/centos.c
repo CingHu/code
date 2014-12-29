@@ -75,10 +75,8 @@ void centos_external_if(FILE* fp, struct inet_t *inet, const char* name)
         {
            flag = true;
         }
-        else
-        {
-            fprintf(fp,"%s=%s\n", pos->key, pos->value);
-        }
+
+        fprintf(fp,"%s=%s\n", pos->key, pos->value);
 
     }
 
