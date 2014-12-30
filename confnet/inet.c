@@ -103,11 +103,15 @@ int parase_file(const char *name, struct inet_t* inet)
         return RT_ERROR;
 
     ch = fgetc(fp);
-    if(NULL == ch)
+    if(EOF == ch)
     {
         log_error("the content of file is NULL\n");
         fclose(fp);  
         return RT_SUCCESS;
+    }
+    else
+    {   
+       fseek( fp , 0 , SEEK_SET);
     }
 
     if( !_push_param(inet, flag))

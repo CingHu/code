@@ -218,7 +218,7 @@ is_ip_public(const char *ip)
 bool get_name_by_mac(const char* mac, char* if_name)
 {
     char name[DEVICE_NAME_LEN]; 
-    char lower_mac[6] = {0};
+    char lower_mac[MAC_ADDR_LEN] = {0};
     int pos = 0;
   
     inetface_t *i;

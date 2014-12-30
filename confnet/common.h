@@ -82,7 +82,7 @@
 #define MASTER_FLAG       1
 #define SLAVOR_FLAG       0
 
-#define MAC_ADDR_LEN      6
+#define MAC_ADDR_LEN      64
 
 extern char uxdigits[16];
 extern char lxdigits[16];
