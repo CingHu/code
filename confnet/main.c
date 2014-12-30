@@ -25,13 +25,13 @@ int main(int argc, char *argv[])
 
     bool rt = false;
     char name[DEVICE_NAME_LEN];
-    char mac[6];
-    void* func[128];
+    char mac[MAC_ADDR_LEN];
+    char func[128];
 
     if(argc < 2)
     {
         print_func();
-        return false;
+        return RT_ERROR;
     }
    
     strcpy(func, argv[1]);

@@ -109,6 +109,10 @@ int parase_file(const char *name, struct inet_t* inet)
         fclose(fp);  
         return RT_SUCCESS;
     }
+    else
+    {   
+       fseek( fp , 0 , SEEK_SET);
+    }
 
     if( !_push_param(inet, flag))
      {
