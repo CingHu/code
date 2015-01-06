@@ -327,10 +327,12 @@ void _restart_internal_interface(const char* name)
      char cmd[128]={0};
 
     
-     sprintf(cmd, "ifconfig %s down", name);
+     //sprintf(cmd, "ifconfig %s down", name);
+     sprintf(cmd, "ifdown %s", name);
      system(cmd);
      memset(cmd, 0, 128);
-     sprintf(cmd, "ifconfig %s up", name);
+     //sprintf(cmd, "ifconfig %s up", name);
+     sprintf(cmd, "ifup %s", name);
      system(cmd);
 }
 
@@ -346,18 +348,22 @@ void _restart_external_interface(const char* name)
 
         if(i == 0)
         {
-            sprintf(cmd, "ifconfig %s down", name);
+            //sprintf(cmd, "ifconfig %s down", name);
+            sprintf(cmd, "ifdown %s ", name);
             system(cmd);
             memset(cmd, 0, 128);
-            sprintf(cmd, "ifconfig %s up", name);
+            //sprintf(cmd, "ifconfig %s up", name);
+            sprintf(cmd, "ifup %s ", name);
             system(cmd);
         }
         else
         {
-            sprintf(cmd, "ifconfig %s:%d down", name, i);
+            //sprintf(cmd, "ifconfig %s:%d down", name, i);
+            sprintf(cmd, "ifdown %s:%d", name, i);
             system(cmd);
             memset(cmd, 0, 128);
-            sprintf(cmd, "ifconfig %s:%d up", name, i);
+            //sprintf(cmd, "ifconfig %s:%d up", name, i);
+            sprintf(cmd, "ifup %s:%d ", name, i);
             system(cmd);
         }
 
