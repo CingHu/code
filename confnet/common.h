@@ -84,6 +84,9 @@
 
 #define MAC_ADDR_LEN      64
 
+#define CENTOS_NETWORK_PATH "/etc/sysconfig/network-scripts/"
+#define SUSE_NETWORK_PATH "/etc/sysconfig/network/scripts/"
+
 extern char uxdigits[16];
 extern char lxdigits[16];
 

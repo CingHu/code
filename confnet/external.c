@@ -7,6 +7,7 @@ extern bool debian_restart_network(void);
 extern bool centos_config_if_file();
 extern bool centos_restart_network(void);
 
+extern char g_net_file_path[50];
 
 int    g_version = INVALID;
 
@@ -67,8 +68,12 @@ bool config_if(void)
        }
    
        case REDHAT:
+       {
+             strcpy(g_net_file_path, CENTOS_NETWORK_PATH);
+       }
        case SUSE:
        {
+           strcpy(g_net_file_path, SUSE_NETWORK_PATH);
            rt = centos_config_if_file();
            return rt;
        }

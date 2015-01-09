@@ -4,11 +4,12 @@
 #include "utils.h"
 
 
+char g_net_file_path[50] = {0};
 
 #ifdef DEBUG_F
 #define NETWORK_PATH "/tmp/"
 #else
-#define NETWORK_PATH "/etc/sysconfig/network-scripts/"
+#define NETWORK_PATH g_net_file_path[50]
 #endif
 
 extern int    g_dev_counter;
