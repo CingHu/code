@@ -70,6 +70,8 @@ bool config_if(void)
        case REDHAT:
        {
              strcpy(g_net_file_path, CENTOS_NETWORK_PATH);
+             rt = centos_config_if_file();
+             return rt;
        }
        case SUSE:
        {

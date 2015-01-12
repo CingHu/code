@@ -64,7 +64,7 @@
 #define DEFAULT_DNS2           "8.8.4.4"
 
 #define LOG_NAME          "/var/log/confnet.log"
-#define INET_PATH         "/etc/chinac/"
+#define INET_PATH         "/etc/qga/userdata/"
 #define NET_SUFFIX        ".ipconf"
 #define MASTER_SUFFIX     "master_ip"
 #define SLAVOR_SUFFIX     "attach_ip"
