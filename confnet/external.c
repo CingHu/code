@@ -6,6 +6,8 @@ extern bool debain_config_if_file();
 extern bool debian_restart_network(void);
 extern bool centos_config_if_file();
 extern bool centos_restart_network(void);
+extern bool suse_config_if_file();
+extern bool suse_restart_network(void);
 
 extern char g_net_file_path[50];
 
@@ -76,7 +78,7 @@ bool config_if(void)
        case SUSE:
        {
            strcpy(g_net_file_path, SUSE_NETWORK_PATH);
-           rt = centos_config_if_file();
+           rt = suse_config_if_file();
            return rt;
        }
        default:
@@ -106,9 +108,13 @@ bool  ex_restart_network(void)
        }
    
        case REDHAT:
-       case SUSE:
        {
            rt = centos_restart_network();
+           return rt;
+       }
+       case SUSE:
+       {
+           rt = suse_restart_network();
            return rt;
        }
        default:
