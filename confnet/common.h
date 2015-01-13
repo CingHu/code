@@ -51,7 +51,11 @@
 
 //#define DEBUG_F
 
+<<<<<<< HEAD
 //#define MAC_F
+=======
+#define MAC_F
+>>>>>>> 9c62ba187646431322632ca00b2278dca49f230e
 
 #ifdef MAC_F
 #define EXTERNAL_MAC_PREFIX    "fa:16:3e"
