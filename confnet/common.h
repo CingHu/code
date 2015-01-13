@@ -51,9 +51,11 @@
 
 //#define DEBUG_F
 
-#ifdef DEBUG_F
-#define EXTERNAL_MAC_PREFIX    "08:00:27:73"
-#define EXTERNAL_MAC_PREFIX_B  "08:00:27:73"
+//#define MAC_F
+
+#ifdef MAC_F
+#define EXTERNAL_MAC_PREFIX    "fa:16:3e"
+#define EXTERNAL_MAC_PREFIX_B  "FA:16:3E"
 #else
 #define EXTERNAL_MAC_PREFIX    "00:3e"
 #define EXTERNAL_MAC_PREFIX_B  "00:3E"
