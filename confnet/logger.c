@@ -108,7 +108,7 @@ log_to_file(struct Logger *log)
 bool
 log_info(const char *fmt, ...)
 {
-    if (!Log.inited)
+    if (!Log.inited || !Log.debug)
         return false;
 
     va_list ap;
@@ -158,6 +158,7 @@ log_debug(const char *fmt, ...)
     write_msg(&Log, fmt, ap);
     va_end(ap);
 
+    
     return log_to_file(&Log);
 }
 

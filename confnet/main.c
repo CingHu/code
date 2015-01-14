@@ -20,6 +20,30 @@ void print_func()
     printf("\treset_all_interface\n");
 }
 
+int return_error(void)
+{
+    printf("%d\n",0);
+    return -1;
+}
+
+int return_ok(void)
+{
+    printf("%d\n",1);
+    return 0;
+}
+
+int return_value(bool rt)
+{
+   if(!rt)
+   {
+       return return_error();
+   }
+   else
+   {
+       return return_ok();
+   }
+}
+
 int main(int argc, char *argv[])
 {
 
@@ -30,8 +54,10 @@ int main(int argc, char *argv[])
 
     if(argc < 2)
     {
+#ifdef DEBUG_F
         print_func();
-        return RT_ERROR;
+#endif
+        return return_error();
     }
    
     strcpy(func, argv[1]);
@@ -43,18 +69,22 @@ int main(int argc, char *argv[])
     if(get_version(&g_version))
     {
         log_error("get version failed\n");
-        return RT_ERROR;
+        return return_error();
     }
-
 
     get_nic_name();
 
     if(strcmp(func, "get_name_by_mac") == 0 && argc == 3)
     {
         strcpy(mac, argv[2]);
-        ex_get_name_by_mac(mac, name);
-        printf("%s\n",name);
-        return RT_SUCCESS;
+        rt = ex_get_name_by_mac(mac, name);
+        if(rt)
+        {
+            printf("%s\n",name);
+            return 0;
+        }
+        else
+            return return_error();
     }
 
     if( RT_SUCCESS != parase_dir_file())
@@ -81,8 +111,10 @@ int main(int argc, char *argv[])
     }
     else
     {
+#ifdef DEBUG_F
         print_func();
-        rt = RT_ERROR;
+#endif
+        rt = false;
         goto end;
     }
 
@@ -91,7 +123,6 @@ end:
 
     log_inet_info();
     free_mem();
-
-    return rt;
+      
+    return return_value(rt);
 }
-

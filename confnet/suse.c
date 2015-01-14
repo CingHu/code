@@ -12,11 +12,8 @@ extern char g_net_file_path[50];
 #define NETWORK_PATH g_net_file_path
 #endif
 
-<<<<<<< HEAD
 #define ROUTE_PATH "/etc/sysconfig/network/routes"
 
-=======
->>>>>>> 9c62ba187646431322632ca00b2278dca49f230e
 extern int    g_dev_counter;
 extern char   g_external_name[MAC_ADDR_LEN];
 
@@ -66,12 +63,8 @@ void suse_external_if(FILE* fp, struct inet_t *inet, int *num)
     bool flag = false;
 
     char key_name[KEY_LEN]={0};
-<<<<<<< HEAD
     char route_name[KEY_LEN]={0};
     FILE *fp_r;
-=======
->>>>>>> 9c62ba187646431322632ca00b2278dca49f230e
-
     if(inet->flag == MASTER_FLAG)
     {
         fprintf(fp, "DEVICE=%s\n", g_external_name);
@@ -95,7 +88,6 @@ void suse_external_if(FILE* fp, struct inet_t *inet, int *num)
       _suse_get_key_name(pos->key, inet->flag, *num, key_name);
       fprintf(fp,"%s=%s\n", key_name, pos->value);
       memset(key_name,0, sizeof(char)*KEY_LEN);
-<<<<<<< HEAD
       if(stringfind(pos->key, "GATEWAY") != -1)
       {
           fp_r = fopen(ROUTE_PATH, "w");
@@ -109,8 +101,6 @@ void suse_external_if(FILE* fp, struct inet_t *inet, int *num)
 
           fclose(fp_r);
       }
-=======
->>>>>>> 9c62ba187646431322632ca00b2278dca49f230e
 
     }
 
